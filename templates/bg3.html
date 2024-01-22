@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BG3 Dump</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<div>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('view') }}">View Config Stuff</a>
+    <a href="{{ url_for('quotes') }}">Random Quote xoxo</a>
+    <a href="{{ url_for('bg3') }}">BG3 dump <3</a>
+    <a href="{{ url_for('ori')}}">Ori Page</a>
+</div>
+<h1>BG3 page!</h1>
+
+<p>Refresh for a new image :D</p>
+<div>
+    <img src="{{ bg3_img_url }}" alt="random bg3 img" style="max-width:70%;height:auto;">
+</div>
+</body>
+</html>
