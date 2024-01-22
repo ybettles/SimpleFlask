@@ -57,7 +57,7 @@ def quotes():
     i = randint(0, len(quotes))
     return render_template('quotes.html', quote=quotes[i])
 
-@app.route("/butt")
+@app.route("/view")
 def view():
     name = current_app.name
     config = current_app.config
