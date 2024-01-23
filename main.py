@@ -42,6 +42,10 @@ quotes = get_quotes()
 img_urls = get_img_urls()
 bg3_img_urls = get_bg3_img_urls()
 
+@app.route("/base")
+def base():
+    return render_template("base.html")
+
 @app.route("/")
 def home():
     return render_template('home.html')
