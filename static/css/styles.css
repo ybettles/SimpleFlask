@@ -1,3 +1,11 @@
+.main-text {
+    color: white;
+}
+
+h1 {
+    color: white;
+}
+
 a:link {
   text-decoration: none;
   color: white;
@@ -19,9 +27,4 @@ a:active {
 body {
     background-image: url(/static/markwallpaper.png);
 }
-
-h1 {
-    color: white;
-}
-
 

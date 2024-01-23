@@ -38,17 +38,13 @@ def create_app():
     return flaskapp
 
 app = create_app()
-quotes = get_quotes()
+quotes_list = get_quotes()
 img_urls = get_img_urls()
 bg3_img_urls = get_bg3_img_urls()
 
-@app.route("/base")
-def base():
-    return render_template("base.html")
-
 @app.route("/")
 def home():
-    return render_template('home.html')
+    return render_template('home.html', title="Home")
 
 @app.route("/current-time")
 def current_time():
@@ -58,26 +54,26 @@ def current_time():
 
 @app.route("/quotes")
 def quotes():
-    i = randint(0, len(quotes))
-    return render_template('quotes.html', quote=quotes[i])
+    i = randint(0, len(quotes_list))
+    return render_template('quotes.html', quote=quotes_list[i], title="Quote")
 
 @app.route("/view")
 def view():
     name = current_app.name
     config = current_app.config
-    return render_template('view.html', name=name, config=config)
+    return render_template('view.html', name=name, config=config, title="Config")
 
 @app.route("/primality-check/int=<int:number>")
 def prime(number):
     isPrime = is_prime(number)
-    return render_template('prime.html', isPrime=isPrime, number=number)
+    return render_template('prime.html', isPrime=isPrime, number=number, title=str(number))
 
 @app.route("/ori")
 def ori():
     i = randint(0, len(img_urls)-1)
-    return render_template('ori.html', img_url=img_urls[i])
+    return render_template('ori.html', img_url=img_urls[i], title="Ori Page")
 
 @app.route("/bg3")
 def bg3():
     i = randint(0, len(bg3_img_urls)-1)
-    return render_template('bg3.html', bg3_img_url=bg3_img_urls[i])
+    return render_template('bg3.html', bg3_img_url=bg3_img_urls[i], title="BG3 Image Dump")
