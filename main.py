@@ -1,7 +1,13 @@
-from flask import Flask, current_app, url_for, render_template
+from flask import Flask, current_app, url_for, render_template, redirect
+from flask_wtf import FlaskForm
+from wtforms import IntegerField, SubmitField
+from wtforms.validators import InputRequired, NumberRange
+import secrets
+
 from time import time, ctime
 from random import randint
 from math import isqrt
+
 
 def get_quotes():
     quotes = []
@@ -42,6 +48,13 @@ quotes_list = get_quotes()
 img_urls = get_img_urls()
 bg3_img_urls = get_bg3_img_urls()
 
+foo = secrets.token_urlsafe(16)
+app.secret_key = foo
+
+class NumberForm(FlaskForm):
+    number = IntegerField('Enter a number to check if it\'s prime:', validators=[InputRequired(message="You can't submit an empty response!"), NumberRange(min=0, message="Please provide positive integer")])
+    submit = SubmitField("Check primality!")
+
 @app.route("/")
 def home():
     return render_template('home.html', title="Home")
@@ -62,6 +75,18 @@ def view():
     name = current_app.name
     config = current_app.config
     return render_template('view.html', name=name, config=config, title="Config")
+
+
+@app.route("/primality-check", methods=['GET', 'POST'])
+def primePage():
+    form = NumberForm()
+    message = ""
+    if form.validate_on_submit():
+        number = form.number.data
+        redirect(url_for('prime', number=number), code=302)
+    else:
+        message = "Invalid input, please try again."
+    return render_template('prime-page.html', title="Primality Check", form=form, message=message)
 
 @app.route("/primality-check/int=<int:number>")
 def prime(number):

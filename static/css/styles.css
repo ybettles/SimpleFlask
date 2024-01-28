@@ -2,8 +2,14 @@
     color: white;
 }
 
+.input-group {
+    max-width:500px;
+    padding: 5px;
+}
+
 h1 {
     color: white;
+    padding: 5px;
 }
 
 a:link {
