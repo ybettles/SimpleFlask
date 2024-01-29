@@ -1,5 +1,5 @@
 from flask import Flask, current_app, url_for, render_template, redirect
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import IntegerField, SubmitField
 from wtforms.validators import InputRequired, NumberRange
 import secrets
@@ -7,6 +7,7 @@ import secrets
 from time import time, ctime
 from random import randint
 from math import isqrt
+import os
 
 
 def get_quotes():
@@ -48,12 +49,14 @@ quotes_list = get_quotes()
 img_urls = get_img_urls()
 bg3_img_urls = get_bg3_img_urls()
 
+csrf = CSRFProtect(app)
 foo = secrets.token_urlsafe(16)
+app.config["SECRET_KEY"] = foo
 app.secret_key = foo
 
 class NumberForm(FlaskForm):
-    number = IntegerField('Enter a number to check if it\'s prime:', validators=[InputRequired(message="You can't submit an empty response!"), NumberRange(min=0, message="Please provide positive integer")])
-    submit = SubmitField("Check primality!")
+    numberField = IntegerField('Enter a number to check if it\'s prime:', validators=[InputRequired(message="You can't submit an empty response!"), NumberRange(min=0, message="Please provide positive integer")])
+    submitField = SubmitField("Check primality!")
 
 @app.route("/")
 def home():
@@ -81,10 +84,12 @@ def view():
 def primePage():
     form = NumberForm()
     message = ""
+    number = 0
     if form.validate_on_submit():
-        number = form.number.data
-        redirect(url_for('prime', number=number), code=302)
+        number = form.numberField.data
+        return redirect(url_for('prime', number=number), code=302)
     else:
+        print(form.errors)
         message = "Invalid input, please try again."
     return render_template('prime-page.html', title="Primality Check", form=form, message=message)
 
