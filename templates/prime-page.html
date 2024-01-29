@@ -7,16 +7,8 @@ check on what form.number.data is actually doing because its not behaving how i 
   {{ form.hidden_tag() }}
   {{ form.csrf_token }}
 <div class="form-group">
-  {{ form.numberField.label }}
   {{ form.numberField(class_="form-control", size=32) }}
 </div>
 {{ form.submitField(class_="form-control", )}}
 </form>
-
-<!--
-<div class="input-group">
-  <input type="text" class="form-control" placeholder="Number" aria-label="number input" aria-describedby="button-addon">
-  <button class="btn btn-outline-secondary"" type="submit">Check primality!</button>
-</div>
--->
 {% endblock %}

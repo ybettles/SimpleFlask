@@ -17,6 +17,7 @@ def get_quotes():
             quotes.append(line)
     return quotes
 
+
 def get_img_urls():
     img_urls = []
     with open("static/img_urls.txt", "r") as f:
@@ -24,12 +25,15 @@ def get_img_urls():
             img_urls.append(line)
     return img_urls
 
+
 def get_bg3_img_urls():
     bg3_img_urls = []
     with open("static/bg3_img_urls.txt", "r") as f:
         for line in f:
             bg3_img_urls.append(line)
     return bg3_img_urls
+
+
 def is_prime(n: int) -> bool:
     if n <= 3:
         return n > 1
@@ -40,9 +44,12 @@ def is_prime(n: int) -> bool:
         if n % i == 0 or n % (i + 2) == 0:
             return False
     return True
+
+
 def create_app():
     flaskapp = Flask(__name__)
     return flaskapp
+
 
 app = create_app()
 quotes_list = get_quotes()
@@ -54,13 +61,16 @@ foo = secrets.token_urlsafe(16)
 app.config["SECRET_KEY"] = foo
 app.secret_key = foo
 
+
 class NumberForm(FlaskForm):
     numberField = IntegerField('Enter a number to check if it\'s prime:', validators=[InputRequired(message="You can't submit an empty response!"), NumberRange(min=0, message="Please provide positive integer")])
     submitField = SubmitField("Check primality!")
 
+
 @app.route("/")
 def home():
     return render_template('home.html', title="Home")
+
 
 @app.route("/current-time")
 def current_time():
@@ -72,6 +82,7 @@ def current_time():
 def quotes():
     i = randint(0, len(quotes_list))
     return render_template('quotes.html', quote=quotes_list[i], title="Quote")
+
 
 @app.route("/view")
 def view():
@@ -93,15 +104,18 @@ def primePage():
         message = "Invalid input, please try again."
     return render_template('prime-page.html', title="Primality Check", form=form, message=message)
 
+
 @app.route("/primality-check/int=<int:number>")
 def prime(number):
     isPrime = is_prime(number)
     return render_template('prime.html', isPrime=isPrime, number=number, title=str(number))
 
+
 @app.route("/ori")
 def ori():
     i = randint(0, len(img_urls)-1)
     return render_template('ori.html', img_url=img_urls[i], title="Ori Page")
+
 
 @app.route("/bg3")
 def bg3():
