@@ -121,3 +121,8 @@ def ori():
 def bg3():
     i = randint(0, len(bg3_img_urls)-1)
     return render_template('bg3.html', bg3_img_url=bg3_img_urls[i], title="BG3 Image Dump")
+
+
+@app.route("/signup")
+def signup():
+    return render_template('signup.html', title="Sign Up")
