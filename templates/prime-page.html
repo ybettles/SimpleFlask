@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1 class="main-text">Enter a number to check if it's prime!</h1>
-<!-- note for next time i work on this:
-check on what form.number.data is actually doing because its not behaving how i think it does -->
+
 <form method="POST" action="">
   {{ form.hidden_tag() }}
   {{ form.csrf_token }}
