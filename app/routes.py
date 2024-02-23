@@ -1,11 +1,10 @@
-from helper import is_prime
-from main import app, quotes_list, img_urls, bg3_img_urls
+from app.helper import is_prime, get_img_urls, get_bg3_img_urls, get_quotes
+from app import app, db
 from flask import current_app, url_for, render_template, redirect
 from time import time, ctime
 from random import randint
 
-import numberForm
-import signUpForm
+from app import forms
 
 
 @app.route("/")
@@ -21,8 +20,9 @@ def current_time():
 
 @app.route("/quotes")
 def quotes():
-    i = randint(0, len(quotes_list))
-    return render_template('quotes.html', quote=quotes_list[i], title="Quote")
+    q = get_quotes()
+    i = randint(0, len(q))
+    return render_template('quotes.html', quote=q[i], title="Quote")
 
 
 @app.route("/view")
@@ -34,7 +34,7 @@ def view():
 
 @app.route("/primality-check", methods=['GET', 'POST'])
 def primePage():
-    form = numberForm.NumberForm()
+    form = forms.NumberForm()
     message = ""
     number = 0
     if form.validate_on_submit():
@@ -54,19 +54,21 @@ def prime(number):
 
 @app.route("/ori")
 def ori():
-    i = randint(0, len(img_urls)-1)
-    return render_template('ori.html', img_url=img_urls[i], title="Ori Page")
+    imgs = get_img_urls()
+    i = randint(0, len(imgs)-1)
+    return render_template('ori.html', img_url=imgs[i], title="Ori Page")
 
 
 @app.route("/bg3")
 def bg3():
-    i = randint(0, len(bg3_img_urls)-1)
-    return render_template('bg3.html', bg3_img_url=bg3_img_urls[i], title="BG3 Image Dump")
+    bg3 = get_bg3_img_urls()
+    i = randint(0, len(bg3)-1)
+    return render_template('bg3.html', bg3_img_url=bg3[i], title="BG3 Image Dump")
 
 
-@app.route("/signup")
+@app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    signUp = signUpForm.SignUpForm()
+    signUp = forms.SignUpForm()
     return render_template('signup.html', form=signUp, title="Sign Up")
 
 

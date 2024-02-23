@@ -7,6 +7,16 @@
     padding: 5px;
 }
 
+.label-text {
+    color: white;
+    padding: 5px;
+}
+
+.form-group {
+    max-width: 400px;
+    padding: 5px;
+}
+
 h1 {
     color: white;
     padding: 5px;
