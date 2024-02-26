@@ -168,3 +168,4 @@ def landing():
     except:
         return redirect(url_for('login'), code=302)
 
+# TODO: add logout functionality
