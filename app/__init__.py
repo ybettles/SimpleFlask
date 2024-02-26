@@ -6,14 +6,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 import secrets
 
+
 def create_app():
     app = Flask(__name__)
-    #with app.app_context():
-       # intialise db here
+    # with app.app_context():
+    # intialise db here
     # manually adding the db: go to terminal, type in flask shell, and then type in db.create_all()
     return app
 
-app =  create_app()
+
+app = create_app()
 
 csrf = CSRFProtect(app)
 foo = secrets.token_urlsafe(16)
@@ -30,8 +32,12 @@ if __name__ == "__main__":
     app.run(debug=True)
 """
 
+# TODO: in here i need an "if db doesnt exist, create it"
+
 from app import routes
 from app.models import *
+
+
 @app.shell_context_processor
 def make_shell_context():
     return dict(db=db)
