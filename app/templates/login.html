@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="main-text">Login</h1>
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
+<div class="form-group">
+    <h3 class="label-text">{{ form.username.label }}</h3>
+    {{ form.username(class_="form-control", size=32) }}
+
+    <h3 class="label-text">{{ form.password.label }}</h3>
+    {{ form.password(class_="form-control", size=32) }}
+
+    {% for error in form.form_errors %}
+        <span style="color:red;">{{ error }}</span>
+    {% endfor %}
+
+    {{ form.submit(class_="form-control", size=32)}}
+</div>
+</form>
+{% endblock %}

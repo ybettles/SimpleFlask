@@ -2,15 +2,22 @@
 {% block content %}
 <h1 class="main-text">Sign Up</h1>
 <form method="POST" action="">
-  {{ form.hidden_tag() }}
-  {{ form.csrf_token }}
+    {{ form.hidden_tag() }}
+    {{ form.csrf_token }}
 <div class="form-group">
-    <h3 class="label-text">{{ form.username.label }}</h3>
-    {{ form.username(class_="form-control", size=32) }}
+    <div>
+        <h3 class="label-text">{{ form.username.label }}</h3>
+        {{ form.username(class_="form-control", size=32) }}
+        {% for error in form.username.errors %}
+            <span style="color:red;">{{ error }}</span>
+        {% endfor %}
+    </div>
     <h3 class="label-text">{{ form.password.label }}</h3>
     {{ form.password(class_="form-control", size=32) }}
+
     <h3 class="label-text">{{ form.confirmPassword.label }}</h3>
     {{ form.confirmPassword(class_="form-control", size=32) }}
+
     {{ form.submit(class_="form-control", size=32)}}
 </div>
 </form>
