@@ -18,6 +18,7 @@ def home():
 # ------------
 # Current Time
 # ------------
+# this was an exercise set in class.
 @app.route("/current-time")
 def current_time():
     t = time()
@@ -39,6 +40,7 @@ def quotes():
 # -----------
 # View Config
 # -----------
+# this was an exercise set in class.
 @app.route("/view-config")
 def view():
     name = current_app.name
@@ -106,29 +108,31 @@ def signup():
     form = forms.SignUpForm()
 
     if form.validate_on_submit():
+        # if input valid, get input from form
         username = form.username.data
         password = form.password.data
-        print(username)
-        print(password)
 
+        # has the password
         hp = hash_it(password)
+        # add a new record to the users table
         user = User(username=username, hashedpassword=hp)
         db.session.add(user)
 
         try:
+            # commit changes
             db.session.commit()
+            # display confirmation message
             flash("New user added with username:" + username, 'success')
+            # set cookies
             resp = make_response(redirect(url_for('home'), code=302))
             resp.set_cookie("username", username)
             return resp
         except:
             db.session.rollback()
-            print("db changes rolled back")
             if User.query.filter_by(username=username).first():
                 form.username.errors.append('This username is taken, please choose a different one and try again.')
 
     else:
-        print(form.errors)
         message = "Invalid input, please try again."
     return render_template('signup.html', form=form, title="Sign Up")
 
@@ -157,7 +161,7 @@ def login():
             resp.set_cookie("username", username)
             return resp
         else:
-            # ur details are bad, try again
+            # your details don't match records, try again
             form.form_errors.append('Incorrect username or password. Please try again.')
 
     return render_template('login.html', form=form, title="Login")

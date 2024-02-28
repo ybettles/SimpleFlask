@@ -7,6 +7,9 @@ class User(db.Model):
     hashedpassword = db.Column(db.LargeBinary)
 
     def __repr__(self):
+        '''
+        :return: Formatted string with each of the data points in the tuple.
+        '''
         return f"users('{self.user_id}', '{self.username}', '{self.hashedpassword}')"
 
 class Item(db.Model):
@@ -15,4 +18,7 @@ class Item(db.Model):
     name = db.Column(db.String(20), nullable=False, unique=True)
 
     def __repr__(self):
+        '''
+        :return: Formatted string with each of the data points in the tuple.
+        '''
         return f"items('{self.item_id}', '{self.name}')"
