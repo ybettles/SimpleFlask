@@ -29,6 +29,7 @@ def current_time():
 # -------------
 # Random Quotes
 # -------------
+# this was an exercise set in class.
 @app.route("/quotes")
 def quotes():
     q = get_quotes()
