@@ -117,8 +117,10 @@ def signup():
 
         try:
             db.session.commit()
-            flash("New user added with username:" + username)
-            return redirect(url_for('home'), code=302)
+            flash("New user added with username:" + username, 'success')
+            resp = make_response(redirect(url_for('home'), code=302))
+            resp.set_cookie("username", username)
+            return resp
         except:
             db.session.rollback()
             print("db changes rolled back")
@@ -147,19 +149,23 @@ def login():
         salt = extract_salt(stored_hash)
         # hash the password given using the same salt
         correct = hash_it(password, salt=salt) == stored_hash
-        # see if match - if it's true, u can log in wahoo, if no, booooo get out
+        # see if match - if it's true, you can log in, if not, try again.
         if correct:
-            # ur details were good, you're logged in, make cookies
-            resp = make_response("Logging you in")
+            # your details were good, you're logged in
+            resp = make_response(render_template('landingpage.html', title=(username + "'s Page"), username=username))
+            # set cookie for login
             resp.set_cookie("username", username)
-
-            return render_template('landingpage.html', title=(username + "'s Page"), username=username, response=resp)
+            return resp
         else:
             # ur details are bad, try again
             form.form_errors.append('Incorrect username or password. Please try again.')
 
     return render_template('login.html', form=form, title="Login")
 
+
+# ------------
+# Landing Page
+# ------------
 @app.route("/landingpage")
 def landing():
     try:
